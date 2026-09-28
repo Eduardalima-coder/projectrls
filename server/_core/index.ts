@@ -39,6 +39,11 @@ async function startServer() {
   registerStorageProxy(app);
   registerOAuthRoutes(app);
 
+  app.get("/api/hotmart/webhook/health", (req, res) => {
+    if (!validHotmartToken(req.header("x-hotmart-hottok"), process.env.HOTMART_WEBHOOK_TOKEN)) return res.status(401).json({ ok: false, error: "invalid_webhook_token" });
+    return res.json({ ok: true, environment: process.env.HOTMART_ENV ?? "sandbox" });
+  });
+
   app.post("/api/hotmart/webhook", async (req, res) => {
     if (!validHotmartToken(req.header("x-hotmart-hottok"), process.env.HOTMART_WEBHOOK_TOKEN)) return res.status(401).json({ ok: false, error: "invalid_webhook_token" });
     const body = req.body as Record<string, any>;
