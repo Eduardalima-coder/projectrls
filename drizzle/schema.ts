@@ -1,4 +1,4 @@
-import { int, mysqlEnum, mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
+import { int, json, mysqlEnum, mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
 
 /**
  * Core user table backing auth flow.
@@ -24,5 +24,25 @@ export const users = mysqlTable("users", {
 
 export type User = typeof users.$inferSelect;
 export type InsertUser = typeof users.$inferInsert;
+
+export const hotmartEvents = mysqlTable("hotmart_events", {
+  id: varchar("id", { length: 191 }).primaryKey(),
+  event: varchar("event", { length: 96 }).notNull(),
+  version: varchar("version", { length: 32 }).notNull(),
+  productUcode: varchar("productUcode", { length: 191 }),
+  productName: text("productName"),
+  transactionId: varchar("transactionId", { length: 191 }),
+  purchaseStatus: varchar("purchaseStatus", { length: 96 }),
+  amount: varchar("amount", { length: 64 }),
+  currency: varchar("currency", { length: 16 }),
+  occurredAt: timestamp("occurredAt"),
+  payload: json("payload").notNull(),
+  receivedAt: timestamp("receivedAt").defaultNow().notNull(),
+  processedAt: timestamp("processedAt"),
+  processingError: text("processingError"),
+});
+
+export type HotmartEvent = typeof hotmartEvents.$inferSelect;
+export type InsertHotmartEvent = typeof hotmartEvents.$inferInsert;
 
 // TODO: Add your tables here

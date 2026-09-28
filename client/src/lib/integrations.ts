@@ -1,0 +1,23 @@
+export type IntegrationStatus = "disponível" | "aguardando conexão" | "conectado";
+export type Integration = { id: string; name: string; category: string; status: IntegrationStatus; purpose: string; required: string[]; supports: string[]; note: string };
+
+export const INTEGRATIONS: Integration[] = [
+  { id: "shopify", name: "Shopify", category: "Loja / checkout", status: "aguardando conexão", purpose: "Pedidos, produtos, clientes, estoque e receita da loja.", required: ["URL da loja", "conta de administrador ou app privado", "permissões de pedidos e produtos"], supports: ["pedidos", "produtos", "clientes", "reembolsos"], note: "O FIRMA só deve ler e preparar ações até a conexão receber escopo aprovado." },
+  { id: "hotmart", name: "Hotmart", category: "Infoproduto / checkout", status: "aguardando conexão", purpose: "Vendas, comissões, reembolsos, assinaturas e compradores.", required: ["conta Hotmart", "credencial oficial da API ou OAuth", "produtos vinculados"], supports: ["vendas", "compradores", "reembolsos", "comissões"], note: "Hotmart não está disponível como conector nativo nesta sessão; a conexão oficial precisa ser fornecida pelo proprietário da conta." },
+  { id: "monetizze", name: "Monetizze", category: "Infoproduto / checkout", status: "aguardando conexão", purpose: "Pedidos, afiliados, comissões, chargebacks e reembolsos.", required: ["conta Monetizze", "token/API oficial", "webhook ou endpoint autorizado"], supports: ["vendas", "afiliados", "reembolsos", "chargebacks"], note: "Monetizze não está disponível como conector nativo nesta sessão; não vou inventar endpoint nem pedir credencial em chat aberto." },
+  { id: "meta-ads", name: "Meta Ads", category: "Aquisição", status: "aguardando conexão", purpose: "Campanhas, gastos, criativos, conversões e públicos.", required: ["Business Manager", "conta de anúncios", "permissão de leitura inicialmente"], supports: ["insights", "campanhas", "criativos", "públicos"], note: "Começar com leitura e rascunho; ativação, compra de mídia e escala permanecem bloqueadas." },
+  { id: "instagram", name: "Instagram", category: "Conteúdo / social", status: "aguardando conexão", purpose: "Calendário, posts, Reels, métricas e comentários autorizados.", required: ["perfil profissional", "Página Meta vinculada", "permissões oficiais"], supports: ["rascunhos", "publicações aprovadas", "insights"], note: "A publicação automática não será habilitada por padrão." },
+  { id: "google-ads", name: "Google Ads", category: "Aquisição", status: "aguardando conexão", purpose: "Campanhas, custo, conversões e termos de pesquisa.", required: ["conta Ads", "permissão de leitura", "conversões configuradas"], supports: ["insights", "diagnóstico", "plano de campanha"], note: "O primeiro estágio é somente leitura." },
+  { id: "stripe", name: "Stripe", category: "Financeiro", status: "aguardando conexão", purpose: "Pagamentos, assinaturas, chargebacks e reconciliação.", required: ["conta Stripe", "chave restrita", "escopo de leitura"], supports: ["pagamentos", "assinaturas", "reembolsos", "disputas"], note: "Cobranças e reembolsos automáticos ficam bloqueados." },
+  { id: "email", name: "Klaviyo / Mailchimp", category: "E-mail", status: "aguardando conexão", purpose: "Listas consentidas, segmentos, campanhas e métricas.", required: ["conta de marketing", "base legal e opt-out", "domínio autenticado"], supports: ["rascunhos", "segmentos", "métricas"], note: "O auxiliar deve bloquear envio sem consentimento e aprovação do escopo." },
+  { id: "whatsapp", name: "WhatsApp / Twilio", category: "Atendimento", status: "aguardando conexão", purpose: "Atendimento, templates aprovados, opt-out e status de entrega.", required: ["provedor oficial", "número comercial", "templates aprovados"], supports: ["tickets", "templates", "status"], note: "Sem disparo em massa e sem contato fora da base consentida." },
+];
+
+export const ADMIN_STEPS = [
+  { id: "identity", label: "Completar identidade da empresa, oferta e responsáveis", owner: "Liderança", severity: "alto" },
+  { id: "product", label: "Vincular cada produto a checkout, canal e política de reembolso", owner: "Produto + Financeiro", severity: "alto" },
+  { id: "consent", label: "Registrar base legal, opt-out e retenção para cada audiência", owner: "Governança", severity: "alto" },
+  { id: "tracking", label: "Validar UTMs, eventos, checkout, CRM e reconciliação", owner: "Dados", severity: "médio" },
+  { id: "approval", label: "Definir aprovador e teto para cada canal e infoproduto", owner: "Liderança", severity: "alto" },
+  { id: "daily", label: "Revisar pendências, incidentes e próximos passos do dia", owner: "Auxiliar", severity: "médio" },
+];
