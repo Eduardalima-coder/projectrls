@@ -61,6 +61,7 @@ type FirmaState = {
   sending: boolean;
   drafts: Draft[];
   approvals: ApprovalRequest[];
+  guidanceEnabled: boolean;
   hydrated: boolean;
   setBriefing: (b: Partial<Briefing>) => void;
   selectProduct: (id: string) => void;
@@ -76,6 +77,7 @@ type FirmaState = {
   addGeneratedDraft: (draft: Omit<Draft, "id" | "version" | "status" | "createdAt" | "updatedAt">) => void;
   requestApproval: (draftId: string) => void;
   decideApproval: (approvalId: string, decision: "approved" | "changes" | "rejected", note?: string) => void;
+  setGuidanceEnabled: (enabled: boolean) => void;
 };
 
 let seq = 1;
@@ -179,6 +181,7 @@ export const useFirma = create<FirmaState>()(
         updatedAt: Date.now() - (index + 1) * 3600000,
       })),
       approvals: [],
+      guidanceEnabled: true,
       hydrated: false,
       setBriefing: (b) => set({ briefing: { ...get().briefing, ...b } }),
       selectProduct: (id) => set({ selectedProductId: id }),
@@ -217,6 +220,7 @@ export const useFirma = create<FirmaState>()(
         const item: LogItem = { id: nid(), at: Date.now(), agentId: "you", text: `${draft?.title ?? "Rascunho"} ${label}. ${note ?? ""}`.trim() };
         set({ approvals: get().approvals.map((entry) => entry.id === approvalId ? { ...entry, status: decision, reviewer: "Você", note } : entry), drafts: get().drafts.map((entry) => entry.id === approval.draftId ? { ...entry, status: decision === "approved" ? "approved" : "draft", updatedAt: Date.now() } : entry), log: [item, ...get().log].slice(0, 48) });
       },
+      setGuidanceEnabled: (enabled) => set({ guidanceEnabled: enabled }),
       setSending: (v) => set({ sending: v }),
       setChatting: (v) => set({ chatting: v }),
       appendChat: (id, msg) =>

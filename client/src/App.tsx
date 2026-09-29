@@ -3,6 +3,7 @@ import { Toaster } from "sonner";
 import { AgentPanel } from "@/components/agent-panel";
 import { ApprovalPanel } from "@/components/approval-panel";
 import { AdminCenter } from "@/components/admin-center";
+import { SettingsSheet } from "@/components/settings-sheet";
 import { BriefSheet, PlaybookSheet } from "@/components/top-bar";
 import { EasyGuide, PixelOffice, SimpleHeader, WelcomeStrip } from "@/components/simple-office";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -15,6 +16,7 @@ export default function App() {
   const [playbookOpen, setPlaybookOpen] = useState(false);
   const [approvalsOpen, setApprovalsOpen] = useState(false);
   const [adminOpen, setAdminOpen] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
 
   useEffect(() => {
     void useFirma.persist.rehydrate();
@@ -42,7 +44,7 @@ export default function App() {
   return (
     <TooltipProvider delayDuration={200}>
       <div className="firma-app">
-        <SimpleHeader onOpenApprovals={() => setApprovalsOpen(true)} onOpenAdmin={() => setAdminOpen(true)} onOpenPlaybook={() => setPlaybookOpen(true)} />
+        <SimpleHeader onOpenApprovals={() => setApprovalsOpen(true)} onOpenAdmin={() => setAdminOpen(true)} onOpenPlaybook={() => setPlaybookOpen(true)} onOpenSettings={() => setSettingsOpen(true)} />
         <main className="firma-main">
           <WelcomeStrip onOpenApprovals={() => setApprovalsOpen(true)} onOpenAdmin={() => setAdminOpen(true)} />
           <div className="workspace-grid">
@@ -55,6 +57,7 @@ export default function App() {
         <PlaybookSheet open={playbookOpen} onClose={() => setPlaybookOpen(false)} />
         <ApprovalPanel open={approvalsOpen} onClose={() => setApprovalsOpen(false)} />
         <AdminCenter open={adminOpen} onClose={() => setAdminOpen(false)} />
+        <SettingsSheet open={settingsOpen} onClose={() => setSettingsOpen(false)} />
         <Toaster theme="light" position="top-center" toastOptions={{ style: { background: "#ffffff", border: "2px solid #2c2c3e", color: "#24233a" } }} />
       </div>
     </TooltipProvider>
