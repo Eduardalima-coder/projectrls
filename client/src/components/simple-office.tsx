@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { CheckSquare, HelpCircle, Plug, Settings, Sparkles, Target, Users } from "lucide-react";
-import { AGENTS, AGENT_BY_ID } from "@/lib/roster";
+import { AGENT_BY_ID } from "@/lib/roster";
 import { PRODUCTS, PRODUCT_STAGES } from "@/lib/portfolio";
 import { useFirma } from "@/lib/store";
 import { brl, cn } from "@/lib/utils";
@@ -21,6 +21,15 @@ const STATUS: Record<string, string> = {
   working: "Trabalhando",
   waiting: "Aguardando",
   blocked: "Travado",
+};
+
+const STATION_POSITIONS: Record<string, { left: string; top: string; tone: string }> = {
+  oto: { left: "12%", top: "22%", tone: "station-pink" },
+  nia: { left: "39%", top: "19%", tone: "station-green" },
+  lia: { left: "66%", top: "22%", tone: "station-yellow" },
+  max: { left: "18%", top: "61%", tone: "station-yellow" },
+  ana: { left: "45%", top: "64%", tone: "station-pink" },
+  eva: { left: "72%", top: "61%", tone: "station-green" },
 };
 
 export function SimpleHeader({
@@ -99,15 +108,19 @@ export function PixelOffice() {
     <section className="office-card">
       <div className="section-heading"><div><p className="eyebrow"><Users size={14} /> pessoas do FIRMA</p><h2>Mapa do escritório</h2></div>{guidanceEnabled ? <span className="hint-bubble">Clique em alguém para conversar</span> : null}</div>
       <div className="pixel-office" role="list" aria-label="Funcionários do FIRMA">
+        <div className="room-wall room-wall-back" /><div className="room-wall room-wall-side" />
         <div className="office-window window-one" /><div className="office-window window-two" />
-        <div className="office-rug" />
+        <div className="room-prop prop-sofa"><i /><i /><i /></div><div className="room-prop prop-plant"><i /><b /></div>
+        <div className="room-prop prop-coffee"><i /><b /></div><div className="office-rug" />
         {rooms.map((id) => {
           const def = AGENT_BY_ID[id as keyof typeof AGENT_BY_ID];
           const live = agents.find((item) => item.id === id);
           const active = selected === id;
+          const position = STATION_POSITIONS[id];
           return (
-            <button key={id} type="button" role="listitem" onClick={() => select(active ? null : def.id)} className={cn("pixel-agent", active && "pixel-agent-active")}>
+            <button key={id} type="button" role="listitem" style={{ left: position.left, top: position.top }} onClick={() => select(active ? null : def.id)} className={cn("office-station", position.tone, active && "pixel-agent-active")}>
               <span className="room-sign">{ROOM_LABELS[id]}</span>
+              <span className="desk"><i className="desk-screen" /><i className="desk-keyboard" /><i className="desk-leg desk-leg-left" /><i className="desk-leg desk-leg-right" /></span>
               <span className={cn("agent-avatar", live?.status === "working" && "avatar-bounce")}><img src={def.sprite} alt="" draggable={false} /></span>
               <span className="agent-name"><i className={cn("status-dot", live?.status === "working" ? "dot-green" : live?.status === "blocked" ? "dot-red" : "dot-yellow")} />{def.name}</span>
               <span className="agent-status">{STATUS[live?.status ?? "idle"]}</span>
