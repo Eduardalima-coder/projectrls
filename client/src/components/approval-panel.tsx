@@ -39,8 +39,8 @@ export function ApprovalPanel({ open, onClose }: { open: boolean; onClose: () =>
   if (!open) return null;
 
   return (
-    <div className="absolute inset-0 z-50 flex items-end justify-center bg-bg/75 p-3 sm:items-center sm:p-6">
-      <section className="flex max-h-[92dvh] w-full max-w-5xl flex-col overflow-hidden rounded-2xl border border-border bg-surface shadow-2xl">
+    <div className="game-modal-backdrop absolute inset-0 z-50 flex items-end justify-center bg-bg/75 p-3 sm:items-center sm:p-6">
+      <section className="game-modal flex max-h-[92dvh] w-full max-w-5xl flex-col overflow-hidden rounded-2xl border border-border bg-surface shadow-2xl">
         <header className="flex items-start gap-3 border-b border-border p-5">
           <div className="min-w-0 flex-1"><p className="font-mono text-xs uppercase tracking-widest text-subtle">FIRMA / governança</p><h2 className="mt-1 font-serif text-2xl text-fg">Rascunhos e aprovação rápida</h2><p className="mt-1 text-sm text-muted">A automação cria e organiza. O botão de decisão libera apenas a versão e o escopo revisados.</p></div>
           <Button variant="ghost" size="icon" className="size-8" onClick={onClose} aria-label="Fechar aprovações"><X /></Button>

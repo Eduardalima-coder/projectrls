@@ -72,7 +72,7 @@ export function AgentPanel() {
 
   return (
     <div className="pointer-events-none absolute inset-x-0 bottom-16 z-30 flex justify-center px-3 lg:inset-auto lg:bottom-4 lg:right-[376px] lg:justify-end">
-      <section className="pointer-events-auto w-full max-w-md overflow-hidden rounded-2xl border border-border bg-surface shadow-lg lg:w-[340px]">
+      <section className="game-agent-panel pointer-events-auto w-full max-w-md overflow-hidden rounded-2xl border border-border bg-surface shadow-lg lg:w-[340px]">
         <header className="flex items-start gap-3 p-4 pb-3">
           <img src={def.sprite} alt="" className="h-16 w-10 object-contain" crossOrigin="anonymous" />
           <div className="min-w-0 flex-1">

@@ -3,9 +3,9 @@ import { Toaster } from "sonner";
 import { AgentPanel } from "@/components/agent-panel";
 import { ApprovalPanel } from "@/components/approval-panel";
 import { AdminCenter } from "@/components/admin-center";
-import { SettingsSheet } from "@/components/settings-sheet";
 import { BriefSheet, PlaybookSheet } from "@/components/top-bar";
-import { EasyGuide, PixelOffice, SimpleHeader, WelcomeStrip } from "@/components/simple-office";
+import { SettingsSheet } from "@/components/settings-sheet";
+import { GameShell } from "@/components/game-shell";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { useFirma } from "@/lib/store";
 
@@ -18,48 +18,23 @@ export default function App() {
   const [adminOpen, setAdminOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
 
+  useEffect(() => { void useFirma.persist.rehydrate(); markHydrated(); }, [markHydrated]);
   useEffect(() => {
-    void useFirma.persist.rehydrate();
-    markHydrated();
-  }, [markHydrated]);
-
-  useEffect(() => {
-    let id = 0;
-    let acc = 0;
-    let last = performance.now();
-    const loop = (now: number) => {
-      const dt = Math.min(0.1, (now - last) / 1000);
-      last = now;
-      acc += dt;
-      if (acc >= 2.6) {
-        acc = 0;
-        tick(now);
-      }
-      id = requestAnimationFrame(loop);
-    };
-    id = requestAnimationFrame(loop);
-    return () => cancelAnimationFrame(id);
+    let id = 0; let acc = 0; let last = performance.now();
+    const loop = (now: number) => { const dt = Math.min(0.1, (now - last) / 1000); last = now; acc += dt; if (acc >= 2.6) { acc = 0; tick(now); } id = requestAnimationFrame(loop); };
+    id = requestAnimationFrame(loop); return () => cancelAnimationFrame(id);
   }, [tick]);
 
-  return (
-    <TooltipProvider delayDuration={200}>
-      <div className="firma-app">
-        <SimpleHeader onOpenApprovals={() => setApprovalsOpen(true)} onOpenAdmin={() => setAdminOpen(true)} onOpenPlaybook={() => setPlaybookOpen(true)} onOpenSettings={() => setSettingsOpen(true)} />
-        <main className="firma-main">
-          <WelcomeStrip onOpenApprovals={() => setApprovalsOpen(true)} onOpenAdmin={() => setAdminOpen(true)} />
-          <div className="workspace-grid">
-            <PixelOffice />
-            <EasyGuide />
-          </div>
-        </main>
-        <AgentPanel />
-        <BriefSheet open={briefOpen} onClose={() => setBriefOpen(false)} />
-        <PlaybookSheet open={playbookOpen} onClose={() => setPlaybookOpen(false)} />
-        <ApprovalPanel open={approvalsOpen} onClose={() => setApprovalsOpen(false)} />
-        <AdminCenter open={adminOpen} onClose={() => setAdminOpen(false)} />
-        <SettingsSheet open={settingsOpen} onClose={() => setSettingsOpen(false)} />
-        <Toaster theme="light" position="top-center" toastOptions={{ style: { background: "#ffffff", border: "2px solid #2c2c3e", color: "#24233a" } }} />
-      </div>
-    </TooltipProvider>
-  );
+  return <TooltipProvider delayDuration={200}>
+    <div className="firma-app">
+      <GameShell onOpenApprovals={() => setApprovalsOpen(true)} onOpenAdmin={() => setAdminOpen(true)} onOpenPlaybook={() => setPlaybookOpen(true)} onOpenSettings={() => setSettingsOpen(true)} />
+      <AgentPanel />
+      <BriefSheet open={briefOpen} onClose={() => setBriefOpen(false)} />
+      <PlaybookSheet open={playbookOpen} onClose={() => setPlaybookOpen(false)} />
+      <ApprovalPanel open={approvalsOpen} onClose={() => setApprovalsOpen(false)} />
+      <AdminCenter open={adminOpen} onClose={() => setAdminOpen(false)} />
+      <SettingsSheet open={settingsOpen} onClose={() => setSettingsOpen(false)} />
+      <Toaster theme="light" position="top-center" toastOptions={{ style: { background: "#ffffff", border: "2px solid #2c2c3e", color: "#24233a" } }} />
+    </div>
+  </TooltipProvider>;
 }
