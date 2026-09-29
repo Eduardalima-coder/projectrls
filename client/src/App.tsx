@@ -3,10 +3,8 @@ import { Toaster } from "sonner";
 import { AgentPanel } from "@/components/agent-panel";
 import { ApprovalPanel } from "@/components/approval-panel";
 import { AdminCenter } from "@/components/admin-center";
-import { CommandRail } from "@/components/command-rail";
-import { OfficeView } from "@/components/office-view";
-import { SideDock } from "@/components/side-dock";
-import { BriefSheet, PlaybookSheet, TopBar } from "@/components/top-bar";
+import { BriefSheet, PlaybookSheet } from "@/components/top-bar";
+import { EasyGuide, PixelOffice, SimpleHeader, WelcomeStrip } from "@/components/simple-office";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { useFirma } from "@/lib/store";
 
@@ -43,19 +41,21 @@ export default function App() {
 
   return (
     <TooltipProvider delayDuration={200}>
-      <div className="relative flex h-dvh flex-col overflow-hidden bg-bg">
-        <TopBar onOpenBrief={() => setBriefOpen(true)} onOpenPlaybook={() => setPlaybookOpen(true)} onOpenApprovals={() => setApprovalsOpen(true)} onOpenAdmin={() => setAdminOpen(true)} />
-        <div className="relative flex min-h-0 flex-1">
-          <OfficeView />
-          <SideDock />
-          <AgentPanel />
-        </div>
-        <CommandRail />
+      <div className="firma-app">
+        <SimpleHeader onOpenApprovals={() => setApprovalsOpen(true)} onOpenAdmin={() => setAdminOpen(true)} onOpenPlaybook={() => setPlaybookOpen(true)} />
+        <main className="firma-main">
+          <WelcomeStrip onOpenApprovals={() => setApprovalsOpen(true)} onOpenAdmin={() => setAdminOpen(true)} />
+          <div className="workspace-grid">
+            <PixelOffice />
+            <EasyGuide />
+          </div>
+        </main>
+        <AgentPanel />
         <BriefSheet open={briefOpen} onClose={() => setBriefOpen(false)} />
         <PlaybookSheet open={playbookOpen} onClose={() => setPlaybookOpen(false)} />
         <ApprovalPanel open={approvalsOpen} onClose={() => setApprovalsOpen(false)} />
         <AdminCenter open={adminOpen} onClose={() => setAdminOpen(false)} />
-        <Toaster theme="dark" position="top-center" toastOptions={{ style: { background: "var(--color-elevated)", border: "1px solid var(--color-border)", color: "var(--color-fg)" } }} />
+        <Toaster theme="light" position="top-center" toastOptions={{ style: { background: "#ffffff", border: "2px solid #2c2c3e", color: "#24233a" } }} />
       </div>
     </TooltipProvider>
   );
