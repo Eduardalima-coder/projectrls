@@ -16,6 +16,8 @@ describe("FIRMA game shell visual contract", () => {
     expect(css).toContain(".game-avatar-station");
     expect(css).toContain(".game-desk");
     expect(css).toContain(".game-room");
+    expect(css).toContain(".game-stage { height: calc(100dvh - 123px)");
+    expect(css).toContain(".game-shell { height: 100dvh");
   });
 
   it("keeps approvals, admin and chat inside game-styled windows", () => {
@@ -23,5 +25,10 @@ describe("FIRMA game shell visual contract", () => {
     expect(read("client/src/components/admin-center.tsx")).toContain("game-modal");
     expect(read("client/src/components/agent-panel.tsx")).toContain("game-agent-panel");
     expect(read("client/src/index.css")).toContain(".game-modal-backdrop");
+  });
+
+  it("keeps the guided-mode settings inside the same game window system", () => {
+    expect(read("client/src/components/settings-sheet.tsx")).toContain("settings-game-modal");
+    expect(read("client/src/index.css")).toContain(".settings-game-backdrop");
   });
 });

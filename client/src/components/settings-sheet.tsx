@@ -7,8 +7,8 @@ export function SettingsSheet({ open, onClose }: { open: boolean; onClose: () =>
   const setGuidanceEnabled = useFirma((s) => s.setGuidanceEnabled);
   if (!open) return null;
   return (
-    <div className="absolute inset-0 z-40 flex items-end justify-center bg-[#343252]/35 p-3 sm:items-center sm:p-6">
-      <section className="settings-sheet" role="dialog" aria-modal="true" aria-labelledby="settings-title">
+    <div className="settings-game-backdrop absolute inset-0 z-40 flex items-end justify-center bg-[#343252]/35 p-3 sm:items-center sm:p-6">
+      <section className="settings-sheet settings-game-modal" role="dialog" aria-modal="true" aria-labelledby="settings-title">
         <header className="settings-header">
           <div className="settings-title"><span className="settings-icon"><Settings size={18} /></span><div><p className="eyebrow">FIRMA / preferências</p><h2 id="settings-title">Configurações</h2></div></div>
           <Button variant="ghost" size="icon" className="size-8" onClick={onClose} aria-label="Fechar configurações"><X /></Button>

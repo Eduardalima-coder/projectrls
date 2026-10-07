@@ -98,3 +98,27 @@
 .game-agent-panel { position: relative; }
 .game-agent-panel::before { position: absolute; top: 0; left: 0; right: 0; height: 6px; content: ""; background: #e6b84e; }
 @media (max-width: 650px) { .game-modal { border-width: 3px !important; box-shadow: 5px 5px 0 #241b34, inset 0 0 0 2px #80699d !important; }.game-modal-backdrop { padding: 6px !important; }.game-modal h2 { font-size: 18px !important; }.game-agent-panel { border-width: 3px !important; } }
+
+/* Fit the complete game shell inside common desktop viewport heights. */
+@media (min-width: 651px) {
+  .game-shell { height: 100dvh; min-height: 0; }
+  .game-stage { height: calc(100dvh - 123px); min-height: 0; padding: 18px; box-sizing: border-box; overflow: hidden; }
+  .game-room { min-height: 0; }
+  .game-room-list { margin-bottom: 0; }
+}
+
+/* Settings window joins the same game UI language as chat and approvals. */
+.settings-game-backdrop { background: rgba(29, 22, 45, .78) !important; backdrop-filter: blur(2px); }
+.settings-game-modal { color: #f7f0ff; background: #4b3a5f; border: 4px solid #241b34; border-radius: 6px; box-shadow: 8px 8px 0 #241b34, inset 0 0 0 3px #80699d; }
+.settings-game-modal .settings-header { background: #5a4671; border-bottom: 3px solid #302240; }
+.settings-game-modal .settings-icon { background: #7461c5; border-color: #241b34; }
+.settings-game-modal .settings-header h2, .settings-game-modal .settings-header .eyebrow { color: #fff; }
+.settings-game-modal .settings-option { background: #59466e; border-color: #80699d; }
+.settings-game-modal .settings-option h3 { color: #fff; font-family: var(--font-mono); font-size: 12px; }
+.settings-game-modal .settings-option p { color: #d6c9e3; }
+.settings-game-modal .settings-note { color: #e7d9a8; background: #604d45; border-left-color: #e6b84e; }
+.settings-game-modal .settings-note b { color: #f5d66b; }
+.settings-game-modal .settings-note span { color: #f2e4ba; }
+.settings-game-modal .settings-footer { border-top: 0; }
+.settings-game-modal .pixel-button-purple { color: #fff !important; background: #7461c5 !important; border-color: #241b34 !important; border-radius: 4px !important; box-shadow: 2px 2px 0 #241b34; }
+@media (max-width: 650px) { .settings-game-modal { border-width: 3px; box-shadow: 5px 5px 0 #241b34, inset 0 0 0 2px #80699d; } }
