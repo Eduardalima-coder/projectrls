@@ -38,19 +38,25 @@ export function GameShell({
   return (
     <div className="game-shell">
       <header className="game-hud-top">
-        <div className="game-brand"><span className="game-brand-mark">F</span><span><b>FIRMA</b><small>escritório online</small></span></div>
+        <div className="game-global-actions"><button aria-label="Abrir menu">‹</button><button aria-label="Alternar câmera">◫</button><button aria-label="Abrir inventário">▱</button></div>
+        <div className="game-brand"><span className="game-brand-mark">F</span><span><b>FIRMA</b><small>HQ</small></span></div>
+        <div className="game-headquarters-title">FIRMA HEADQUARTERS<span /></div>
         <div className="game-room-name"><span className="room-status" /> Sala principal <small>• 6 online</small></div>
         <label className="game-product"><span>produto ativo</span><select aria-label="Produto ativo" value={selectedProductId} onChange={(e) => selectProduct(e.target.value)}>{PRODUCTS.map((item) => <option key={item.id} value={item.id}>{item.name}</option>)}</select></label>
         <div className="game-coins"><span><Coins /> {brl(metrics.receita)}</span><span><Users /> {metrics.leads}</span></div>
         <div className="game-hud-actions"><Button onClick={onOpenApprovals} aria-label="Aprovações" className="game-icon-button"><CheckSquare /></Button><Button onClick={onOpenAdmin} aria-label="Conexões" className="game-icon-button"><Plug /></Button><Button onClick={onOpenPlaybook} aria-label="Ajuda" className="game-icon-button"><HelpCircle /></Button><Button onClick={onOpenSettings} aria-label="Configurações" className="game-icon-button"><Settings /></Button></div>
+        <div className="game-standup-card"><small>STANDUP</small><b>Standup completo.</b><span>0/6 arrived</span></div>
+        <div className="game-top-roster">{PEOPLE.map(({ id }) => <button key={id} onClick={() => select(id)}><i className={`roster-dot roster-${id}`} />{AGENT_BY_ID[id].name}<small>◉</small></button>)}</div>
       </header>
 
       <main className="game-stage">
+        <aside className="game-left-rail" aria-label="Navegação principal"><button>⌂</button><button>♙</button><button className="rail-active">▥</button><button>▤</button></aside>
         <div className="game-room" role="list" aria-label="Sala principal da FIRMA">
           <div className="game-back-wall"><span className="game-logo-sign">FIRMA<br /><small>MAIN OFFICE</small></span><span className="wall-window window-left" /><span className="wall-window window-right" /><span className="wall-shelf shelf-one" /><span className="wall-shelf shelf-two" /></div>
           {furniture.map((item) => <div key={item} className={`game-furniture furniture-${item}`} aria-hidden="true"><i /><b /><em /></div>)}
           <div className="game-rug" aria-hidden="true" />
           <div className="game-walkway" aria-hidden="true"><span /><span /><span /></div>
+          <div className="game-3d-prop prop-server-rack" aria-hidden="true"><i /><i /><i /></div><div className="game-3d-prop prop-meeting-table" aria-hidden="true"><i /><i /><i /><i /></div><div className="game-3d-prop prop-couch" aria-hidden="true"><i /><i /></div>
           {PEOPLE.map(({ id, deskLeft, deskTop, walkerLeft, walkerTop, desk, walkClass, delay }) => {
             const def = AGENT_BY_ID[id];
             const live = agents.find((agent) => agent.id === id);
@@ -76,8 +82,9 @@ export function GameShell({
           <div className="game-bubble bubble-one">3 tarefas novas</div><div className="game-bubble bubble-two">Clique em uma pessoa</div>
         </div>
         <aside className="game-room-list"><p>salas</p><button className="room-list-active"><span>◈</span> Sala principal <b>6</b></button><button><span>▣</span> Segundo cérebro</button><button><span>▤</span> Aprovações <b className="alert-count">3</b></button></aside>
+        <aside className="game-right-tabs" aria-label="Áreas da FIRMA"><button>OPEN HQ</button><button>MARKETPLACE</button><button>ANALYTICS</button></aside>
       </main>
-      <nav className="game-action-bar"><div className="game-action-hint"><ShoppingBag size={17} /><span>{product.name}</span><small>{PRODUCT_STAGES[product.stage]}</small></div><div className="game-actions"><button onClick={onOpenApprovals}><CheckSquare /> aprovar</button><button onClick={onOpenAdmin}><Plug /> conectar</button><button onClick={onOpenPlaybook}><BookOpen /> como jogar</button></div><div className="game-help-text">Selecione uma mesa para conversar</div></nav>
+      <nav className="game-action-bar"><div className="game-action-hint"><ShoppingBag size={17} /><span>{product.name}</span><small>{PRODUCT_STAGES[product.stage]}</small></div><div className="game-actions"><button onClick={onOpenApprovals}><CheckSquare /> aprovar</button><button onClick={onOpenAdmin}><Plug /> conectar</button><button onClick={onOpenPlaybook}><BookOpen /> como jogar</button></div><div className="game-legend"><span>◉ working</span><span>◌ idle</span><span>⚠ error</span><span>▥ quiet</span><b>drag · scroll · space:drag · dbl-click</b></div><button className="game-chat-button" onClick={onOpenPlaybook}>CHAT</button></nav>
     </div>
   );
 }
