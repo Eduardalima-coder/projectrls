@@ -63,7 +63,11 @@ export function GameShell({
               </button>
               <button type="button" role="listitem" className={cn("game-walker", walkClass, isSelected && "game-avatar-selected")} style={{ left: walkerLeft, top: walkerTop, animationDelay: delay }} onClick={() => select(isSelected ? null : def.id)} aria-label={`Falar com ${def.name}`}>
                 <span className="game-walker-name">{def.name}</span>
-                <img src={def.sprite} alt="" className="game-avatar" draggable={false} />
+                <span className={`game-character character-${id}`} aria-hidden="true">
+                  <i className="char-shadow" /><i className="char-leg char-leg-left" /><i className="char-leg char-leg-right" />
+                  <i className="char-body" /><i className="char-arm char-arm-left" /><i className="char-arm char-arm-right" />
+                  <i className="char-head" /><i className="char-hair" /><i className="char-face" />
+                </span>
               </button>
             </span>;
           })}

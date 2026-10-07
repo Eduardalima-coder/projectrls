@@ -172,3 +172,39 @@
 
 /* Social-room convention: the name tag belongs to the walking avatar, not the desk. */
 .game-workstation .game-name-tag { display: none; }
+
+/* Original low-poly game characters: no photographic or human sprite assets. */
+.game-room { perspective: 1200px; perspective-origin: 50% 44%; transform-style: preserve-3d; }
+.game-back-wall { transform: translateZ(28px); transform-style: preserve-3d; }
+.game-back-wall::after { position: absolute; right: -18px; bottom: -14px; width: 100%; height: 14px; content: ""; background: #29313e; transform: skewX(45deg); transform-origin: right bottom; }
+.game-workstation { transform-style: preserve-3d; }
+.game-workstation .game-desk { transform: skewX(-9deg) rotateX(7deg) translateZ(8px); transform-style: preserve-3d; }
+.game-workstation .game-desk::after { position: absolute; left: 4px; right: -9px; bottom: -12px; height: 12px; content: ""; background: #332637; transform: skewX(30deg); transform-origin: top; }
+.game-character { position: relative; display: block; width: 54px; height: 100px; transform: translateY(3px); transform-style: preserve-3d; filter: drop-shadow(3px 5px 0 rgba(20, 24, 34, .35)); }
+.game-character i { position: absolute; display: block; box-sizing: border-box; }
+.char-shadow { left: 5px; bottom: 1px; width: 44px; height: 10px; background: rgba(29, 35, 46, .42); border-radius: 50%; transform: rotateX(68deg); }
+.char-head { z-index: 4; top: 19px; left: 17px; width: 22px; height: 23px; background: #c88f77; border: 2px solid #352c3c; border-radius: 4px 5px 6px 6px; transform: rotateY(-12deg) skewY(-3deg); box-shadow: 4px 2px 0 #9d665e; }
+.char-face { z-index: 6; top: 29px; left: 21px; width: 4px; height: 3px; background: #332c3a; box-shadow: 8px 0 #332c3a; }
+.char-hair { z-index: 7; top: 14px; left: 14px; width: 27px; height: 11px; background: #302938; border: 2px solid #25202e; border-radius: 7px 6px 2px 2px; transform: skewX(-8deg); }
+.char-body { z-index: 3; top: 40px; left: 12px; width: 30px; height: 34px; background: #526c73; border: 2px solid #2b2c3b; clip-path: polygon(16% 0, 84% 0, 100% 86%, 74% 100%, 26% 100%, 0 86%); box-shadow: 5px 4px 0 #34434d; transform: rotateY(-8deg); }
+.char-arm { z-index: 2; top: 43px; width: 9px; height: 27px; background: #c88f77; border: 2px solid #352c3c; border-radius: 5px; }
+.char-arm-left { left: 7px; transform: rotate(12deg); }.char-arm-right { right: 6px; transform: rotate(-15deg); }
+.char-leg { z-index: 1; bottom: 10px; width: 10px; height: 26px; background: #384258; border: 2px solid #292938; border-radius: 2px 2px 4px 4px; }
+.char-leg-left { left: 15px; transform: rotate(4deg); }.char-leg-right { right: 15px; transform: rotate(-4deg); }
+.character-oto .char-body { background: #594266; }.character-oto .char-hair { background: #22232d; }
+.character-nia .char-body { background: #b56c45; }.character-nia .char-hair { background: #4a2b27; border-radius: 9px 4px 3px 3px; }
+.character-lia .char-body { background: #bd9c62; }.character-lia .char-hair { background: #d7c2a4; }
+.character-max .char-body { background: #456a8e; }.character-max .char-hair { background: #273244; }
+.character-ana .char-body { background: #658b78; }.character-ana .char-hair { background: #6a4b3c; }
+.character-eva .char-body { background: #8d6276; }.character-eva .char-hair { background: #c6aa89; }
+.game-walker .game-character { animation: character-idle 1.8s ease-in-out infinite; }
+.game-walker:hover .game-character, .game-walker.game-avatar-selected .game-character { animation-play-state: paused; }
+@keyframes character-idle { 0%, 100% { transform: translateY(3px); } 50% { transform: translateY(1px); } }
+@media (prefers-reduced-motion: reduce) { .game-walker .game-character { animation: none; } }
+
+/* Cuboid room props: each furniture item gets a darker side and a top face. */
+.game-furniture { transform-style: preserve-3d; }
+.game-furniture::after { position: absolute; right: -9px; bottom: -8px; width: 100%; height: 9px; content: ""; background: rgba(36, 31, 47, .78); transform: skewX(42deg); transform-origin: left top; }
+.furniture-sofa, .furniture-coffee, .furniture-board { transform: translateZ(12px); }
+.furniture-plant { transform: translateZ(18px); }
+.game-rug { transform: rotateX(62deg) translateZ(2px); transform-origin: center bottom; }
