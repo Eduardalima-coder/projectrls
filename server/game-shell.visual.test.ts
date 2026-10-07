@@ -6,14 +6,18 @@ const projectRoot = resolve(import.meta.dirname, "..");
 const read = (relativePath: string) => readFileSync(resolve(projectRoot, relativePath), "utf8");
 
 describe("FIRMA game shell visual contract", () => {
-  it("keeps the office as a static room with clickable agent stations", () => {
+  it("keeps the office as a clickable virtual hotel with walking agents", () => {
     const shell = read("client/src/components/game-shell.tsx");
     const css = read("client/src/index.css");
 
     expect(shell).toContain('className="game-shell"');
-    expect(shell).toContain('className={cn("game-avatar-station"');
+    expect(shell).toContain('className={cn("game-workstation"');
+    expect(shell).toContain('className={cn("game-walker"');
     expect(shell).toContain('onClick={() => select(isSelected ? null : def.id)}');
-    expect(css).toContain(".game-avatar-station");
+    expect(css).toContain(".game-workstation");
+    expect(css).toContain(".game-walker");
+    expect(css).toContain("@keyframes habbo-walk");
+    expect(css).toContain(".game-walkway");
     expect(css).toContain(".game-desk");
     expect(css).toContain(".game-room");
     expect(css).toContain(".game-stage { height: calc(100dvh - 123px)");

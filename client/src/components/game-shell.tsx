@@ -7,12 +7,12 @@ import { brl, cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
 const PEOPLE = [
-  { id: "oto", left: "15%", top: "26%", desk: "desk-plum" },
-  { id: "nia", left: "39%", top: "22%", desk: "desk-green" },
-  { id: "lia", left: "66%", top: "26%", desk: "desk-gold" },
-  { id: "max", left: "22%", top: "66%", desk: "desk-gold" },
-  { id: "ana", left: "48%", top: "70%", desk: "desk-pink" },
-  { id: "eva", left: "75%", top: "66%", desk: "desk-green" },
+  { id: "oto", deskLeft: "9%", deskTop: "34%", walkerLeft: "20%", walkerTop: "39%", desk: "desk-plum", walkClass: "walk-oto", delay: "0s" },
+  { id: "nia", deskLeft: "36%", deskTop: "27%", walkerLeft: "48%", walkerTop: "32%", desk: "desk-green", walkClass: "walk-nia", delay: "-2s" },
+  { id: "lia", deskLeft: "67%", deskTop: "34%", walkerLeft: "59%", walkerTop: "44%", desk: "desk-gold", walkClass: "walk-lia", delay: "-4s" },
+  { id: "max", deskLeft: "19%", deskTop: "67%", walkerLeft: "32%", walkerTop: "66%", desk: "desk-gold", walkClass: "walk-max", delay: "-5s" },
+  { id: "ana", deskLeft: "48%", deskTop: "70%", walkerLeft: "43%", walkerTop: "57%", desk: "desk-pink", walkClass: "walk-ana", delay: "-1s" },
+  { id: "eva", deskLeft: "73%", deskTop: "67%", walkerLeft: "64%", walkerTop: "62%", desk: "desk-green", walkClass: "walk-eva", delay: "-3s" },
 ] as const;
 
 export function GameShell({
@@ -50,16 +50,22 @@ export function GameShell({
           <div className="game-back-wall"><span className="game-logo-sign">FIRMA<br /><small>MAIN OFFICE</small></span><span className="wall-window window-left" /><span className="wall-window window-right" /><span className="wall-shelf shelf-one" /><span className="wall-shelf shelf-two" /></div>
           {furniture.map((item) => <div key={item} className={`game-furniture furniture-${item}`} aria-hidden="true"><i /><b /><em /></div>)}
           <div className="game-rug" aria-hidden="true" />
-          {PEOPLE.map(({ id, left, top, desk }) => {
+          <div className="game-walkway" aria-hidden="true"><span /><span /><span /></div>
+          {PEOPLE.map(({ id, deskLeft, deskTop, walkerLeft, walkerTop, desk, walkClass, delay }) => {
             const def = AGENT_BY_ID[id];
             const live = agents.find((agent) => agent.id === id);
             const isSelected = selected === id;
-            return <button key={id} type="button" role="listitem" className={cn("game-avatar-station", desk, isSelected && "game-avatar-selected")} style={{ left, top }} onClick={() => select(isSelected ? null : def.id)} aria-label={`Falar com ${def.name}`}>
-              <span className="game-name-tag">{def.name}</span>
-              <span className="game-desk"><i className="screen" /><i className="keyboard" /><i className="leg leg-a" /><i className="leg leg-b" /></span>
-              <img src={def.sprite} alt="" className="game-avatar" draggable={false} />
-              <span className="game-status"><i className={live?.status === "working" ? "online" : "away"} />{live?.status === "working" ? "trabalhando" : "disponível"}</span>
-            </button>;
+            return <span key={id} className="game-agent-pair">
+              <button type="button" role="listitem" className={cn("game-workstation", desk, isSelected && "game-avatar-selected")} style={{ left: deskLeft, top: deskTop }} onClick={() => select(isSelected ? null : def.id)} aria-label={`Abrir mesa de ${def.name}`}>
+                <span className="game-name-tag">{def.name}</span>
+                <span className="game-desk"><i className="screen" /><i className="keyboard" /><i className="leg leg-a" /><i className="leg leg-b" /></span>
+                <span className="game-status"><i className={live?.status === "working" ? "online" : "away"} />{live?.status === "working" ? "online" : "disponível"}</span>
+              </button>
+              <button type="button" role="listitem" className={cn("game-walker", walkClass, isSelected && "game-avatar-selected")} style={{ left: walkerLeft, top: walkerTop, animationDelay: delay }} onClick={() => select(isSelected ? null : def.id)} aria-label={`Falar com ${def.name}`}>
+                <span className="game-walker-name">{def.name}</span>
+                <img src={def.sprite} alt="" className="game-avatar" draggable={false} />
+              </button>
+            </span>;
           })}
           <div className="game-bubble bubble-one">3 tarefas novas</div><div className="game-bubble bubble-two">Clique em uma pessoa</div>
         </div>
