@@ -25,6 +25,8 @@ describe("FIRMA game shell visual contract", () => {
     expect(css).toContain(".char-body");
     expect(css).toContain("perspective: 1200px");
     expect(css).toContain("@keyframes seated-work");
+    expect(css).toContain("@keyframes agent-presence");
+    expect(css).toContain("@keyframes seated-presence");
     expect(css).toContain("@keyframes meet-and-talk");
     expect(css).toContain("game-room::after");
     expect(css).toContain("@keyframes habbo-walk");

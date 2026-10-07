@@ -242,3 +242,13 @@
 @keyframes meet-and-talk { 0%, 35%, 62%, 100% { opacity: 0; transform: translateX(-50%) translateY(5px); } 42%, 55% { opacity: 1; transform: translateX(-50%) translateY(0); } }
 @media (prefers-reduced-motion: reduce) { .game-desk .seated-avatar, .work-glow, .workstation-activity i, .game-conversation-bubble { animation: none; }.game-conversation-bubble { opacity: 1; } }
 @media (max-width: 650px) { .game-room { transform: perspective(850px) rotateX(4deg); box-shadow: 0 10px 0 #202631, 7px 13px 0 rgba(0,0,0,.35); }.game-room::after { bottom: -23px; height: 21px; }.game-back-wall { transform: translateZ(30px); }.game-workstation { transform: translate(-50%, 0) translateZ(20px); }.game-walker { transform: translateZ(38px); }.workstation-activity { top: 84px; font-size: 6px; }.game-desk .seated-avatar { left: 46px; top: 5px; transform: scale(.76); transform-origin: left top; }.work-glow { left: 51px; top: -22px; }.game-conversation-bubble { font-size: 7px; } }
+
+/* One avatar, one state: seated at the workstation or walking through the room. */
+.game-walker { animation-name: habbo-walk, agent-presence; animation-duration: 8s, 16s; animation-timing-function: ease-in-out, linear; animation-iteration-count: infinite, infinite; }
+.game-desk .seated-avatar { animation: seated-work 2.4s ease-in-out infinite, seated-presence 16s linear infinite; }
+.game-desk .work-glow, .game-desk .workstation-activity { transition: opacity 180ms ease; }
+@keyframes agent-presence { 0%, 16% { opacity: 0; } 22%, 70% { opacity: 1; } 78%, 100% { opacity: 0; } }
+@keyframes seated-presence { 0%, 16% { opacity: 1; } 22%, 70% { opacity: 0; } 78%, 100% { opacity: 1; } }
+.game-workstation:has(.seated-avatar) .work-glow { animation: computer-working 1.4s ease-in-out infinite, seated-presence 16s linear infinite; }
+.game-workstation:has(.seated-avatar) .workstation-activity { animation: seated-presence 16s linear infinite; }
+@media (prefers-reduced-motion: reduce) { .game-walker { animation: none; opacity: 1; }.game-desk .seated-avatar, .game-workstation:has(.seated-avatar) .work-glow, .game-workstation:has(.seated-avatar) .workstation-activity { animation: none; opacity: 1; } }
