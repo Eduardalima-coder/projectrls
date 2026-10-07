@@ -15,12 +15,18 @@ describe("FIRMA game shell visual contract", () => {
     expect(shell).toContain('className={cn("game-walker"');
     expect(shell).toContain("game-character character-");
     expect(shell).not.toContain("def.sprite");
+    expect(shell).toContain("seated-avatar");
+    expect(shell).toContain("workstation-activity");
+    expect(shell).toContain("game-conversation-bubble");
     expect(shell).toContain('onClick={() => select(isSelected ? null : def.id)}');
     expect(css).toContain(".game-workstation");
     expect(css).toContain(".game-walker");
     expect(css).toContain(".game-character");
     expect(css).toContain(".char-body");
     expect(css).toContain("perspective: 1200px");
+    expect(css).toContain("@keyframes seated-work");
+    expect(css).toContain("@keyframes meet-and-talk");
+    expect(css).toContain("game-room::after");
     expect(css).toContain("@keyframes habbo-walk");
     expect(css).toContain(".game-walkway");
     expect(css).toContain(".game-desk");

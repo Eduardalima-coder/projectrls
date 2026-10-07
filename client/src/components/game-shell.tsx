@@ -58,11 +58,13 @@ export function GameShell({
             return <span key={id} className="game-agent-pair">
               <button type="button" role="listitem" className={cn("game-workstation", desk, isSelected && "game-avatar-selected")} style={{ left: deskLeft, top: deskTop }} onClick={() => select(isSelected ? null : def.id)} aria-label={`Abrir mesa de ${def.name}`}>
                 <span className="game-name-tag">{def.name}</span>
-                <span className="game-desk"><i className="screen" /><i className="keyboard" /><i className="leg leg-a" /><i className="leg leg-b" /></span>
+                <span className="game-desk"><i className="screen" /><i className="keyboard" /><i className="leg leg-a" /><i className="leg leg-b" /><i className="desk-chair" /><i className="seated-avatar" /><i className="work-glow" /></span>
+                <span className="workstation-activity"><i /> trabalhando</span>
                 <span className="game-status"><i className={live?.status === "working" ? "online" : "away"} />{live?.status === "working" ? "online" : "disponível"}</span>
               </button>
               <button type="button" role="listitem" className={cn("game-walker", walkClass, isSelected && "game-avatar-selected")} style={{ left: walkerLeft, top: walkerTop, animationDelay: delay }} onClick={() => select(isSelected ? null : def.id)} aria-label={`Falar com ${def.name}`}>
                 <span className="game-walker-name">{def.name}</span>
+                <span className="game-conversation-bubble">olá!</span>
                 <span className={`game-character character-${id}`} aria-hidden="true">
                   <i className="char-shadow" /><i className="char-leg char-leg-left" /><i className="char-leg char-leg-right" />
                   <i className="char-body" /><i className="char-arm char-arm-left" /><i className="char-arm char-arm-right" />
